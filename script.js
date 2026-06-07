@@ -49,16 +49,23 @@ document.querySelectorAll('.skill-fill').forEach(bar => {
 });
 
 // Contact form
-function handleSubmit(btn) {
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = 'Message Sent ✓';
-    btn.style.background = '#3cffc8';
-    setTimeout(() => {
-      btn.textContent = 'Send Message →';
-      btn.disabled = false;
-      btn.style.background = '';
-    }, 3000);
-  }, 1500);
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    const btn = this.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+  });
 }
+
+// Show success message after redirect
+window.addEventListener('load', function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('success') || window.location.hash === '#success') {
+    const btn = document.querySelector('.form-submit');
+    if (btn) {
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#3cffc8';
+    }
+  }
+});
